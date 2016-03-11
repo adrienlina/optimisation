@@ -1,5 +1,5 @@
 function [F,G,H,ind] = OraclePH(qc,ind)
-    AdTInv = inv(AdT);
+    //AdTInv = inv(AdT);
     //B = [-AdTInv*AdC;eye(n-md,n-md)]
     //q0 = [AdTInv*fd;zeros(n-md,1)]
     v = q0+B*qc;

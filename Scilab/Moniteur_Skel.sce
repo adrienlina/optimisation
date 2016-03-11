@@ -40,8 +40,10 @@
    //
    exec('OraclePH.sci');
    exec('OraclePG.sce');
+   exec('Wolfe_Skel.sci');
    exec('Optim_Scilab.sci');
    exec('Gradient_F.sci');
+   exec('Gradient_V.sci');
    
    titrgr = "Fonction optim de Scilab sur le probleme primal";
 
@@ -62,10 +64,14 @@
 // ----------------------------
 
    // Exemple : la fonction "optim" de Scilab
-   [fopt,xopt,gopt] = Optim_Scilab(OraclePH,xini);
+   //[fopt,xopt,gopt] = Optim_Scilab(OraclePH,xini);
 
    // Exemple : le gradient à pas fixe
    //[fopt,xopt,gopt] = Gradient_F(OraclePG,xini);
+   
+   // Exemple : le gradient à pas variable
+   [fopt,xopt,gopt] = Gradient_V(OraclePG,xini);
+
 
 // --------------------------
 // Verification des resultats
