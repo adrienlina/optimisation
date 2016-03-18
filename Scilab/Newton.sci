@@ -54,7 +54,13 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
       end
 
 //    - calcul de la direction de descente
-      D  = - inv(H)*G;
+      if det(H) ~=0 then
+         D  = - inv(H)*G;
+      else
+          D = -G;
+      end
+       
+      
 //    - mise a jour des variables
 
       
