@@ -58,26 +58,28 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
    //
    // xn represente le point pour la valeur courante du pas,
    // xp represente le point pour la valeur precedente du pas.
-   [J0,GJ0] = Oracle(x,4);
+   [J0,GJ0] = Oracle(x,ind);
    while ok == 0
       
       xp = xn;
       xn = x + (alphan*D);
 
       // Calcul des conditions de Wolfe
-      [J,GJ] = Oracle(xn,4);
-      condition1 = (J<=J0+omega1*alphan*(GJ0'*D));
-      condition2 = ((GJ'*D)>=omega2*(GJ0'*D));
-      disp(J);
-      disp(J0);
-      disp(GJ'*D);
-      disp(GJ0'*D);
-      disp("fin")
+      [J,GJ] = Oracle(xn,ind);
+      condition1 = (J<=(J0+omega1*alphan*(GJ0'*D)));
+      condition2 = ((GJ'*D)>=(omega2*(GJ0'*D)));
+      //disp(J);
+      //disp(J0);
+      //disp(GJ'*D);
+      //disp(GJ0'*D);
+      //disp(condition2);
+      //disp(condition1);
+      //disp("fin")
       // Test de la valeur de alphan :
       // - si les deux conditions de Wolfe sont verifiees,
       //   faire ok = 1 : on sort alors de la boucle while
       // - sinon, modifier la valeur de alphan : on reboucle.
-      if ~condition2 then disp(condition2); end
+      //if ~condition2 then disp(condition2); end
       if ~(condition1) then
           alphamax = alphan;
           alphan = 1/2*(alphamin+alphamax);
@@ -86,7 +88,7 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
           if alphamax == %inf then alphan = 2 * alphamin;
           else alphan = 1/2*(alphamax+alphamin);
           end
-          disp("condition 2")
+          //disp("condition 2")
       else
           ok = 1;
       end

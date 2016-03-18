@@ -1,4 +1,4 @@
-function [fopt,xopt,gopt]=Gradient_V(Oracle,xini)
+function [fopt,xopt,gopt]=polak_ribiere(Oracle,xini)
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -14,12 +14,12 @@ function [fopt,xopt,gopt]=Gradient_V(Oracle,xini)
 // Parametres de la methode
 // ------------------------
 
-   titre = "Parametres du gradient a pas variable";
+   titre = "Parametres de la méthode Polake-Ribière";
    labels = ["Nombre maximal d''iterations";...
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
    typ = list("vec",1,"vec",1,"vec",1);
-   default = ["5000";"1";"0.000001"];
+   default = ["5000";"10";"0.000001"];
    [ok,iter,alphai,tol] = getvalue(titre,labels,typ,default);
 
 // ----------------------------
@@ -37,7 +37,9 @@ function [fopt,xopt,gopt]=Gradient_V(Oracle,xini)
 // -------------------------
 
    x = xini;
-
+   alpha = alphai;
+   Gk= %nan;
+   Dk = %nan;
    kstar = iter;
    for k = 1:iter
 
@@ -47,22 +49,30 @@ function [fopt,xopt,gopt]=Gradient_V(Oracle,xini)
       [F,G] = Oracle(x,ind);
 
 //    - test de convergence
-
+      //disp(G);
+      //disp(F);
+      //disp(x);
       if norm(G) <= tol then
          kstar = k;
          break
       end
 
 //    - calcul de la direction de descente
-
-      D = -G;
-
-//    - calcul de la longueur du pas de gradient
-
-      [alpha,ok] = Wolfe(alphai,x,D,Oracle);
-
+      if k == 1 then
+         D = -G;
+      else
+         bet = (G'*(G-Gk))/(Gk'*Gk);
+         //disp(norm(Gk)^2)
+         //disp(Gk'*Gk);
+         //disp(norm(G))
+         //disp(bet);
+         D = -G + bet * Dk;
+      end
+     
+     Gk = G;
+     Dk = D;
 //    - mise a jour des variables
-
+      [alpha,ok] = Wolfe(alphai,x,D,Oracle);
       x = x + (alpha*D);
 
 //    - evolution du gradient, du pas et du critere

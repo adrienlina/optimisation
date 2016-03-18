@@ -44,6 +44,7 @@
    exec('Optim_Scilab.sci');
    exec('Gradient_F.sci');
    exec('Gradient_V.sci');
+   exec('polak-ribiere.sce');
    
    titrgr = "Fonction optim de Scilab sur le probleme primal";
 
@@ -70,7 +71,10 @@
    //[fopt,xopt,gopt] = Gradient_F(OraclePG,xini);
    
    // Exemple : le gradient à pas variable
-   [fopt,xopt,gopt] = Gradient_V(OraclePG,xini);
+   //[fopt,xopt,gopt] = Gradient_V(OraclePG,xini);
+   
+   // Exemple : la méthode de Polak-Ribière
+   [fopt,xopt,gopt] = polak_ribiere(OraclePG,xini);
 
 
 // --------------------------
