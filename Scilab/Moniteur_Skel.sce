@@ -45,6 +45,7 @@
    exec('Gradient_F.sci');
    exec('Gradient_V.sci');
    exec('polak-ribiere.sce');
+   exec('BFGS.sci');
    
    titrgr = "Fonction optim de Scilab sur le probleme primal";
 
@@ -74,7 +75,10 @@
    //[fopt,xopt,gopt] = Gradient_V(OraclePG,xini);
    
    // Exemple : la méthode de Polak-Ribière
-   [fopt,xopt,gopt] = polak_ribiere(OraclePG,xini);
+   //[fopt,xopt,gopt] = polak_ribiere(OraclePG,xini);
+   
+   // Exemple : la méthode de BFGS
+   [fopt,xopt,gopt] = BFGS(OraclePG,xini);
 
 
 // --------------------------

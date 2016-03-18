@@ -96,6 +96,7 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
 
       // Test d'indistinguabilite
 
+     
       if norm(xn-xp) < dltx then
         ok = 2;
       end

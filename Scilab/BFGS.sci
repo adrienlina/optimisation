@@ -19,7 +19,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
    typ = list("vec",1,"vec",1,"vec",1);
-   default = ["5000";"10";"0.000001"];
+   default = ["5000";"1";"0.000001"];
    [ok,iter,alphai,tol] = getvalue(titre,labels,typ,default);
 
 // ----------------------------
@@ -40,6 +40,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
    alpha = alphai;
    Gk= %nan;
    Dk = %nan;
+   xk = %nan;
    kstar = iter;
    for k = 1:iter
 
@@ -60,18 +61,30 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 //    - calcul de la direction de descente
       if k == 1 then
          D = -G;
+         Wk = eye(length(G),length(G));
       else
-         bet = (G'*(G-Gk))/(Gk'*Gk);
-         //disp(norm(Gk)^2)
-         //disp(Gk'*Gk);
-         //disp(norm(G))
-         //disp(bet);
-         D = -G + bet * Dk;
+         deltag = G - Gk;
+         deltau = x-xk;
+          if k >= 169 then
+          disp(norm(eye(length(G),length(G))-(deltau*deltau')/(deltag'*deltau)));
+          disp(norm(deltau*deltag'/(deltag'*deltau) ));
+          disp(norm(Wk));
+          disp("fin");
       end
+         Wk = (eye(length(G),length(G))-(deltau*deltag'/(deltag'*deltau)))*Wk*(eye(length(G),length(G))-(deltag*deltau'/(deltag'*deltau)))+(deltau*deltau')/(deltag'*deltau);
+         D = -Wk*G;
+      end
+     xk = x;
      
-     Gk = G;
      Dk = D;
+     Gk = G;
 //    - mise a jour des variables
+      if k >= 169 then
+          //disp(deltag);
+          //disp(deltau);
+          //disp(Wk);
+      end
+      
       [alpha,ok] = Wolfe(alphai,x,D,Oracle);
       x = x + (alpha*D);
 
