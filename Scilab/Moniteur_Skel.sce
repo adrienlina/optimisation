@@ -46,6 +46,7 @@
    exec('Gradient_V.sci');
    exec('polak-ribiere.sce');
    exec('BFGS.sci');
+   exec('Newton.sci');
    
    titrgr = "Fonction optim de Scilab sur le probleme primal";
 
@@ -78,7 +79,10 @@
    //[fopt,xopt,gopt] = polak_ribiere(OraclePG,xini);
    
    // Exemple : la méthode de BFGS
-   [fopt,xopt,gopt] = BFGS(OraclePG,xini);
+   //[fopt,xopt,gopt] = BFGS(OraclePG,xini);
+   
+   // Exemple : la méthode de Newton
+   [fopt,xopt,gopt] = Newton(OraclePH,xini);
 
 
 // --------------------------

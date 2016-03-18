@@ -101,7 +101,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
            'Temps CPU         : ' string(tcpu);...
            'Critere optimal   : ' string(fopt);...
            'Norme du gradient : ' string(norm(gopt))];
-   disp('Fin de la methode de gradient a pas fixe')
+   disp('Fin de la methode de gradient de BFGS')
    disp(cvge)
 
 // - visualisation de la convergence

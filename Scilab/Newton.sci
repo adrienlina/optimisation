@@ -38,17 +38,11 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
 
    x = xini;
    alpha = alphai;
-   Gk= %nan;
-   Dk = %nan;
-   xk = %nan;
    kstar = iter;
-   ind = 4;
-   [F,G] = Oracle(x,ind);
-   Id = eye(length(G),length(G)); 
    for k = 1:iter
-
+      ind = 7;
 //    - valeur du critere et du gradient
-      [F,G] = Oracle(x,ind);
+      [F,G,H] = Oracle(x,ind);
 
 //    - test de convergence
       //disp(G);
@@ -60,19 +54,7 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
       end
 
 //    - calcul de la direction de descente
-      if k == 1 then
-         D = -G;
-         Wk = Id;
-      else
-         deltag = G - Gk;
-         deltau = x-xk;
-         Wk = (Id-(deltau*deltag'/(deltag'*deltau)))*Wk*(Id-(deltag*deltau'/(deltag'*deltau)))+(deltau*deltau')/(deltag'*deltau);
-         D = -Wk*G;
-      end
-     xk = x;
-     
-     Dk = D;
-     Gk = G;
+      D  = - inv(H)*G;
 //    - mise a jour des variables
 
       
@@ -101,7 +83,7 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
            'Temps CPU         : ' string(tcpu);...
            'Critere optimal   : ' string(fopt);...
            'Norme du gradient : ' string(norm(gopt))];
-   disp('Fin de la methode de gradient a pas fixe')
+   disp('Fin de la methode de gradient Newton')
    disp(cvge)
 
 // - visualisation de la convergence
