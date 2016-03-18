@@ -1,11 +1,11 @@
-function [fopt,xopt,gopt]=BFGS(Oracle,xini)
+function [fopt,xopt,gopt]=Newton(Oracle,xini)
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //         RESOLUTION D'UN PROBLEME D'OPTIMISATION SANS CONTRAINTES          //
 //                                                                           //
-//         Methode de BFGS a pas variable                                //
+//         Methode de Newton a pas variable                                //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 // Parametres de la methode
 // ------------------------
 
-   titre = "Parametres de la méthode BFGS";
+   titre = "Parametres de la méthode Newton";
    labels = ["Nombre maximal d''iterations";...
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
