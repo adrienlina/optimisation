@@ -28,6 +28,7 @@ function [F,G,H,ind] = OraclePH(qc,ind)
         G = B'*(r.*v.*abs(v))+(Ar*B)'*pr;
         RV = diag(abs(v).*r);
         H = 2*B'*(RV*B);
+        //disp(size(F),size(G),size(H))
         //R = (ones(sizeB(2),1)*r');
         //V = (ones(sizeB(2),1)*v');
         //H = (B'.*R.*V)*B;

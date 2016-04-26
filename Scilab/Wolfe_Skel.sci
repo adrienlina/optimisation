@@ -31,8 +31,8 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
 // Coefficients de la recherche lineaire
 // -------------------------------------
 
-   omega1 = 0.001;
-   omega2 = 0.99;
+   omega1 = 0.1;
+   omega2 = 0.9;
 
    alphamin = 0.0;
    alphamax = %inf;
